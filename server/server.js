@@ -1,6 +1,8 @@
 require ('./config/config')
 
 const express = require("express");
+const mongoose = require('mongoose');
+
 const app = express();
 const bodyParser = require("body-parser");
 
@@ -38,6 +40,13 @@ app.put("/usuario/:id", function (req, res) {
 app.delete("/usuario", function (req, res) {
   res.json("delete Usuario");
 });
+
+const uri = 'mongodb+srv://mern_user:NrEvsdGFJAa0Rs8U@cluster0.fx5ag.mongodb.net/cafe';
+mongoose.connect(uri,{useNewUrlParser: true, useUnifiedTopology: true}, (err,res) => {
+  if (err) throw err;
+  console.log('Base de datos online');
+});
+
 
 app.listen(process.env.PORT, () => {
   console.log("Escuchando en puerto:", process.env.PORT);
