@@ -20,6 +20,7 @@ let usuarioSchema = new Schema({
     required: false,
   }, // no es obligatoria
   role: {
+    type: String,
     default: "USER_ROLE",
   }, // default: 'USER_ROLE'
   estado: {
