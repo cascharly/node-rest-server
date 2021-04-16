@@ -4,10 +4,33 @@ const _ = require("underscore");
 const Usuario = require("../models/usuario");
 const app = express();
 
+// GET  ---------------------------------------------------------------------
 app.get("/usuario", function (req, res) {
-  res.json("get Usuario");
+  let desde = req.query.desde || 0;
+  desde = Number(desde);
+
+  let limite = req.query.limite || 5;
+  limite = Number(limite);
+
+  Usuario.find({})
+    .skip(desde)
+    .limit(limite)
+    .exec((err, usuarios) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
+
+      res.json({
+        ok: true,
+        usuarios,
+      });
+    });
 });
 
+// POST  --------------------------------------------------------------------
 app.post("/usuario", function (req, res) {
   let body = req.body;
 
@@ -33,6 +56,7 @@ app.post("/usuario", function (req, res) {
   });
 });
 
+// PUT  ---------------------------------------------------------------------------
 app.put("/usuario/:id", function (req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, ["nombre, email, img, role, estado"]);
@@ -57,6 +81,7 @@ app.put("/usuario/:id", function (req, res) {
   );
 });
 
+// DELETE  --------------------------------------------------------------------------
 app.delete("/usuario", function (req, res) {
   res.json("delete Usuario");
 });
