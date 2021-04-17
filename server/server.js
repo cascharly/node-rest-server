@@ -18,7 +18,7 @@ const uri =
   "mongodb+srv://mern_user:NrEvsdGFJAa0Rs8U@cluster0.fx5ag.mongodb.net/cafe";
 mongoose.connect(
   uri,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   (err, res) => {
     if (err) throw err;
     console.log("Base de datos online");
